@@ -26,5 +26,4 @@
         </div>
     </section>
 <?php include "./components/Footer.php";?>
-<script src="scripts/foodbank.js"></script>
-
+<script src="scripts/foodbanks.js"></script>
