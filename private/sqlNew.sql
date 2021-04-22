@@ -1,26 +1,59 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.9.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 22, 2021 at 12:35 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Host: localhost:8889
+-- Generation Time: Apr 22, 2021 at 02:06 AM
+-- Server version: 5.7.26
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
+--
+-- Database: `foodEx`
+--
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- --------------------------------------------------------
 
 --
--- Database: `foodex`
+-- Table structure for table `applications`
 --
+
+CREATE TABLE `applications` (
+  `id` int(11) NOT NULL,
+  `foodbank` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `applications`
+--
+
+INSERT INTO `applications` (`id`, `foodbank`, `address`, `status`) VALUES
+(1, 'Food Distribution Center \r\nSemoran Food Pantry', '1771 N Semoran Blvd, \r\nOrlando, FL 32807', 'In Review');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `id` int(11) NOT NULL,
+  `foodbank` varchar(255) NOT NULL,
+  `day` varchar(22) NOT NULL,
+  `time` varchar(22) NOT NULL,
+  `address` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `foodbank`, `day`, `time`, `address`) VALUES
+(2, 'Knights Helping Knights Pantry', 'Monday, June 22', '12:00PM', '4133 Pyxis Ln, Orlando, FL 32816');
 
 -- --------------------------------------------------------
 
@@ -36,8 +69,8 @@ CREATE TABLE `banks` (
   `state` varchar(2) NOT NULL,
   `zipcode` int(5) NOT NULL,
   `phone` varchar(16) DEFAULT NULL,
-  `logo_url` text DEFAULT NULL,
-  `banner_url` text DEFAULT NULL
+  `logo_url` text,
+  `banner_url` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Holds database for banks basic information';
 
 --
@@ -48,6 +81,27 @@ INSERT INTO `banks` (`id`, `name`, `address`, `city`, `state`, `zipcode`, `phone
 (1, 'Knights Helping Knights Pantry', '4133 Pyxis Ln', 'Orlando', 'FL', 32816, '407-823-3663', 'https://media-exp1.licdn.com/dms/image/C510BAQHlfm7KULdsBw/company-logo_200_200/0/1519889798320?e=2159024400&v=beta&t=TJS-PtLIAtwNCAA8Y799ggeWacedLqqhnWOXoWnFrrE', 'https://pbs.twimg.com/profile_images/1510198702/Logo_2.png'),
 (2, 'Seeds of Paradise Food Pantry', '1460 N Goldenrod Rd\r\n', 'Orlando', 'FL', 32807, '(407) 250-5822', 'https://pbs.twimg.com/profile_images/2924896269/3219fad95ba574ed71330b3f2503ca4a.jpeg', 'https://iscf.org/wp-content/uploads/2017/04/ISCF-Logo-Hoz-768x269.pn'),
 (3, 'Food Distribution Center - Semoran Food Pantry', '1771 N Semoran Blvd', 'Orlando', 'FL', 32807, '(407) 658-1818', 'https://pbs.twimg.com/profile_images/1326276919231393794/UTJ1kGRS_400x400.jpg', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `bank_id` int(11) NOT NULL,
+  `day` varchar(11) NOT NULL,
+  `times` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`bank_id`, `day`, `times`) VALUES
+(1, 'Monday', '10:00AM - 11:00PM'),
+(2, 'Thursday', '1:00PM - 5:00PM'),
+(3, 'Friday', '3:00PM - 9:00PM');
 
 -- --------------------------------------------------------
 
@@ -118,11 +172,25 @@ INSERT INTO `users` (`id`, `url_address`, `password`, `email`, `created_at`, `fi
 (23, 'OcXS', '$2y$10$OQnaTBG8lS4eiOPwSLy9ve039ZcTx2V3J0jbdahs3lJNgXFyuafx.', 'j@j.com', '2021-04-10 00:57:20', 'yjon', 'j', 32222, '1231231234', NULL, NULL, NULL),
 (24, 'X736H3uJWamyb3RvwvkvX', '$2y$10$qP4EVxm3xYO.H9/dwCNRnu3v5bN3uL/hHR1LxddxbVOUN0wpqSd.W', 'a@a.com', '2021-04-10 00:58:21', 'a', 'a', 12345, '1231231233', NULL, NULL, NULL),
 (25, 't8CYKF4qltzpSchsZy7VehkgpkgZwJd7FXAhrrlPw4Tfs5nm9xxJCxZJSshv', '$2y$10$bnlqOmvQwZcAe23rWqiP8OaCVzBYXaFtm2QAQr8l7.Hk01lUATKtC', 'f@f.com', '2021-04-10 00:59:06', 'f', 'f', 12345, '1231231234', NULL, NULL, NULL),
-(26, 'HVrBReT0fXCIFqYwpWgmL166WERYKw5ETKcM1PN', '$2y$10$ibnG4fFXQ70y8J/Hb3UwQu17uE6JYwv1IQ96t6oQT7UO.NKVdzG1C', 'y@y.com', '2021-04-10 01:03:03', 'y', 'y', 45678, '4564564567', NULL, NULL, NULL);
+(26, 'HVrBReT0fXCIFqYwpWgmL166WERYKw5ETKcM1PN', '$2y$10$ibnG4fFXQ70y8J/Hb3UwQu17uE6JYwv1IQ96t6oQT7UO.NKVdzG1C', 'y@y.com', '2021-04-10 01:03:03', 'y', 'y', 45678, '4564564567', NULL, NULL, NULL),
+(27, 'QYDpdRCcXA', '$2y$10$kkPXFYXSBjSPVudmpjncfuOxwGEGcE4XFWMU.ENaSGgfYSTqDj5iC', 'yjang@yjang.com', '2021-04-22 00:34:07', 'Matt', 'Matt', 12333, '1231231233', NULL, NULL, NULL),
+(28, 'neKZM6BdHCVhWHr40TQe9T', '$2y$10$drHr3hGZN.vXpuG6YMSfLOQALdApGX2s3EehcUpaDJyN4QQ4FYl3.', 'dan@dan.com', '2021-04-22 00:58:40', 'dan', 'dan', 12345, '1231231234', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `applications`
+--
+ALTER TABLE `applications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `banks`
@@ -150,6 +218,18 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `applications`
+--
+ALTER TABLE `applications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `banks`
 --
 ALTER TABLE `banks`
@@ -159,7 +239,7 @@ ALTER TABLE `banks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
@@ -170,8 +250,3 @@ ALTER TABLE `users`
 --
 ALTER TABLE `schedules`
   ADD CONSTRAINT `fk_bank_id` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
