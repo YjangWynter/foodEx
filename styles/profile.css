@@ -1,0 +1,26 @@
+
+.profile{
+    text-decoration: none;
+}
+.profile strong{
+    font-size: large;
+}
+img {
+    width: 50%;
+    
+}
+.profile_form{
+    min-height: 300px;
+    color:#EBEBEB;
+    font-weight: bold;
+}   
+.profile_form_content{
+    margin-left: 10%;
+}
+.avatar{
+    width:50px;
+}
+.arren{
+    background-image: url('../assets/images/arren.png');
+
+}
