@@ -20,7 +20,7 @@
 <?php
 if ($loggedIn == true){
     ?>
-                        <a href="profile" class="profile w3-bar-item">
+                        <a href="profile.php" class="profile w3-bar-item">
                         <img src="./assets/images/avatar.png"
                          class="avatar w3-image w3-round-xxlarge w3-mobile w3-light-blue w3-hover-red"/>
                          <strong class="w3-auto w3-padding">&#129171;</strong>
